@@ -34,7 +34,7 @@ Here are some of the documents from Apple that informed the style guide. If some
 * [Protected Methods](#protected-methods)
 * [CGRect Functions](#cgrect-functions)
 * [Golden Path](#golden-path)
-* [Error handling](#error-handling)
+* [Error Handling](#error-handling)
 * [Singletons](#singletons)
 * [Line Breaks](#line-breaks)
 * [Xcode Project](#xcode-project)
