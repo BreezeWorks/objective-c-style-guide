@@ -665,7 +665,7 @@ Where class constructor methods are used, these should always return type of 'in
 
 More information on instancetype can be found on [NSHipster.com](http://nshipster.com/instancetype/).
 
-## Protected methods
+## Protected Methods
 
 **TK**
 
@@ -725,7 +725,7 @@ When coding with conditionals, the left hand margin of the code should be the "g
 }
 ```
 
-## Error handling
+## Error Handling
 
 When methods return an error parameter by reference, switch on the returned value, not the error variable.
 
