@@ -28,15 +28,15 @@ Here are some of the documents from Apple that informed the style guide. If some
 * [Private Properties](#private-properties)
 * [Booleans](#booleans)
 * [Conditionals](#conditionals)
-  * [Ternary Operator](#ternary-operator)
+* [Ternary Operator](#ternary-operator)
 * [Init Methods](#init-methods)
 * [Class Constructor Methods](#class-constructor-methods)
+* [Protected Methods](#protected-methods)
 * [CGRect Functions](#cgrect-functions)
 * [Golden Path](#golden-path)
 * [Error handling](#error-handling)
 * [Singletons](#singletons)
 * [Line Breaks](#line-breaks)
-* [Smiley Face](#smiley-face)
 * [Xcode Project](#xcode-project)
 
 
