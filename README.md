@@ -1,18 +1,4 @@
-# The official raywenderlich.com Objective-C style guide.
-
-This style guide outlines the coding conventions for raywenderlich.com.
-
-## Introduction
-
-The reason we made this style guide was so that we could keep the code in our books, tutorials, and starter kits nice and consistent - even though we have many different authors working on the books.
-
-This style guide is different from other Objective-C style guides you may see, because the focus is centered on readability for print and the web. Many of the decisions were made with an eye toward conserving space for print, easy legibility, and tutorial writing.
-
-## Credits
-
-The creation of this style guide was a collaborative effort from various raywenderlich.com team members under the direction of Nicholas Waynik.  The team includes: [Soheil Moayedi Azarpour](https://github.com/moayes), [Ricardo Rendon Cepeda](https://github.com/ricardo-rendoncepeda), [Tony Dahbura](https://github.com/tdahbura), [Colin Eberhardt](https://github.com/ColinEberhardt), [Matt Galloway](https://github.com/mattjgalloway), [Greg Heo](https://github.com/gregheo), [Matthijs Hollemans](https://github.com/hollance), [Christopher LaPollo](https://github.com/elephantronic), [Saul Mora](https://github.com/casademora), [Andy Pereira](https://github.com/macandyp), [Mic Pringle](https://github.com/micpringle), [Pietro Rea](https://github.com/pietrorea), [Cesare Rocchi](https://github.com/funkyboy), [Marin Todorov](https://github.com/icanzilb), [Nicholas Waynik](https://github.com/ndubbs), and [Ray Wenderlich](https://github.com/raywenderlich)
-
-We would like to thank the creators of the [New York Times](https://github.com/NYTimes/objective-c-style-guide) and [Robots & Pencils'](https://github.com/RobotsAndPencils/objective-c-style-guide) Objective-C Style Guides.  These two style guides provided a solid starting point for this guide to be created and based upon.
+# The official Breezeworks Objective-C style guide.
 
 ## Background
 
@@ -68,8 +54,95 @@ UIColor *myColor = [UIColor whiteColor];
 UIColor *myColour = [UIColor whiteColor];
 ```
 
+## Import Organization
+
+Imports, particularly in implementation files, should be sorted in the following order:
+
+- Breeze classes (BW*.h)
+- Third-party classes with local includes ("Foobar.h")
+- Third-party classes with global includes (<Foobar/Foobar.h>), including iOS frameworks
+- Categories
+
+**Preferred:**
+```objc
+#import "BWAddEditCustomerViewController.h"
+#import "BWAddEditCustomerViewModel.h"
+#import "ABContactsHelper.h"
+#import <QuartzCore/QuartzCore.h>
+#import "NSArray+helpers.h"
+```
+
+**Not Preferred:**
+```objc
+#import "NSArray+helpers.h"
+#import "BWAddEditCustomerViewController.h"
+#import <QuartzCore/QuartzCore.h>
+#import "BWAddEditCustomerViewModel.h"
+#import "ABContactsHelper.h"
+```
 
 ## Code Organization
+
+Separate imports and static declarations from private interfaces with two carriage returns. Also put two carriage returns between the private interface and the implementation.
+```objc
+#import "BWBreezeAPI.h"
+
+static NSString* foobar = @"foobar";
+
+
+@interface MyClass ()
+
+// ...
+
+@end
+
+
+@implementation MyClass
+
+// ...
+
+@end
+```
+
+Interfaces should be organized with properties first, followed by method declarations. Group IBOutlet and IBActions together:
+
+**Preferred**
+```objc
+@interface MyClass ()
+
+@property (nonatomic, strong) NSString *aString;
+@property (nonatomic, strong) NSNumber *aNumber;
+@property (nonatomic, weak) IBOutlet UITextField *aTextField;
+@property (nonatomic, weak) IBOutlet UITextField *bTextField;
+@property (nonatomic, weak) IBOutlet UISwitch *aSwitch;
+
+- (void)myMethod:(NSString *)aString;
+- (NSNumber *)myOtherMethod:(NSNumber *)aNumber;
+- (IBAction)someButtonTapped:(id)sender;
+- (IBAction)segmentedControlValueChanged:(id)sender;
+	
+@end
+```
+
+**Not Preferred**
+```objc
+@interface MyClass ()
+
+- (void)myMethod:(NSString *)aString;
+- (NSNumber *)myOtherMethod:(NSNumber *)aNumber;
+@property (nonatomic, strong) NSString *aString;
+
+@property (nonatomic, weak) IBOutlet UITextField *aTextField;
+@property (nonatomic, strong) NSNumber *aNumber;
+@property (nonatomic, weak) IBOutlet UITextField *bTextField;
+
+- (IBAction)someButtonTapped:(id)sender;
+@property (nonatomic, weak) IBOutlet UISwitch *aSwitch;
+
+- (IBAction)segmentedControlValueChanged:(id)sender;
+	
+@end
+```
 
 Use `#pragma mark -` to categorize methods in functional groupings and protocol/delegate implementations following this general structure.
 
@@ -115,7 +188,7 @@ Use `#pragma mark -` to categorize methods in functional groupings and protocol/
 
 ## Spacing
 
-* Indent using 2 spaces (this conserves space in print and makes line wrapping less likely). Never indent with tabs. Be sure to set this preference in Xcode.
+* Indent using 4 spaces. Never indent with tabs. Be sure to set this preference in Xcode.
 * Method braces and other braces (`if`/`else`/`switch`/`while` etc.) always open on the same line as the statement but close on a new line.
 
 **Preferred:**
