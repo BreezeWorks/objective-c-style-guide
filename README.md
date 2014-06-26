@@ -313,7 +313,7 @@ The usage of the word "and" is reserved.  It should not be used for multiple par
 - (void)sendAction:(SEL)aSelector to:(id)anObject forAllCells:(BOOL)flag;
 - (id)viewWithTag:(NSInteger)tag;
 - (instancetype)initWithWidth:(CGFloat)width height:(CGFloat)height;
-- (void)setName:(NSString *)name age:(NSInteger) forUser:(User *)user;
+- (void)setName:(NSString *)name age:(NSInteger)age forUser:(User *)user;
 ```
 
 **Not Preferred:**
@@ -324,7 +324,7 @@ The usage of the word "and" is reserved.  It should not be used for multiple par
 - (id)taggedView:(NSInteger)tag;
 - (instancetype)initWithWidth:(CGFloat)width andHeight:(CGFloat)height;
 - (instancetype)initWith:(int)width and:(int)height;  // Never do this.
-- (void)setUser:(User *)user withName:(NSString *)name andAge:(NSInteger);
+- (void)setUser:(User *)user withName:(NSString *)name andAge:(NSInteger)age;
 ```
 
 ## Variables
