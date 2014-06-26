@@ -194,9 +194,9 @@ Use `#pragma mark -` to categorize methods in functional groupings and protocol/
 **Preferred:**
 ```objc
 if (user.isHappy) {
-  //Do something
+    //Do something
 } else {
-  //Do something else
+    //Do something else
 }
 ```
 
@@ -263,7 +263,7 @@ UIButton *settingsButton;
 UIButton *setBut;
 ```
 
-A three letter prefix should always be used for class names and constants, however may be omitted for Core Data entity names. For any official raywenderlich.com books, starter kits, or tutorials, the prefix 'RWT' should be used.
+A two- or (preferably) three-letter prefix should always be used for class names and constants, however may be omitted for Core Data entity names.
 
 Constants should be camel-case with all words capitalized and prefixed by the related class name for clarity.
 
@@ -303,9 +303,9 @@ Local variables should not contain underscores.
 
 ## Methods
 
-In method signatures, there should be a space after the method type (-/+ symbol). There should be a space between the method segments (matching Apple's style).  Always include a keyword and be descriptive with the word before the argument which describes the argument.
+In method signatures, there should be a space after the method type (-/+ symbol). There should **not** be a space between the return value and the method name. There should be a space between the method segments (matching Apple's style). Always include a keyword and be descriptive with the word before the argument which describes the argument.
 
-The usage of the word "and" is reserved.  It should not be used for multiple parameters as illustrated in the `initWithWidth:height:` example below.
+The usage of the word "and" is reserved.  It should not be used for multiple parameters as illustrated in the `initWithWidth:height:` example below. Be judicious when including prepositions (such as "with" or "for") in method names, only using them when they materially improve the clarity of the declaration.
 
 **Preferred:**
 ```objc
@@ -313,6 +313,7 @@ The usage of the word "and" is reserved.  It should not be used for multiple par
 - (void)sendAction:(SEL)aSelector to:(id)anObject forAllCells:(BOOL)flag;
 - (id)viewWithTag:(NSInteger)tag;
 - (instancetype)initWithWidth:(CGFloat)width height:(CGFloat)height;
+- (void)setName:(NSString *)name age:(NSInteger) forUser:(User *)user;
 ```
 
 **Not Preferred:**
@@ -323,13 +324,14 @@ The usage of the word "and" is reserved.  It should not be used for multiple par
 - (id)taggedView:(NSInteger)tag;
 - (instancetype)initWithWidth:(CGFloat)width andHeight:(CGFloat)height;
 - (instancetype)initWith:(int)width and:(int)height;  // Never do this.
+- (void)setUser:(User *)user withName:(NSString *)name andAge:(NSInteger);
 ```
 
 ## Variables
 
 Variables should be named as descriptively as possible. Single letter variable names should be avoided except in `for()` loops.
 
-Asterisks indicating pointers belong with the variable, e.g., `NSString *text` not `NSString* text` or `NSString * text`, except in the case of constants.
+Asterisks indicating pointers belong with the variable, e.g., `NSString *text` not `NSString* text` or `NSString * text`, except in the case of constants. Asterisks should be separated from types by a space in method declarations or block typedefs.
 
 [Private properties](#private-properties) should be used in place of instance variables whenever possible. Although using instance variables is a valid way of doing things, by agreeing to prefer properties our code will be more consistent. 
 
@@ -356,19 +358,19 @@ Direct access to instance variables that 'back' properties should be avoided exc
 
 ## Property Attributes
 
-Property attributes should be explicitly listed, and will help new programmers when reading the code.  The order of properties should be storage then atomicity, which is consistent with automatically generated code when connecting UI elements from Interface Builder.
+Property attributes should be explicitly listed, and will help new programmers when reading the code. Atomicity should precede storage. In nearly all cases, IBOutlets should be declared weak to avoid overretention.
 
 **Preferred:**
 
 ```objc
-@property (weak, nonatomic) IBOutlet UIView *containerView;
-@property (strong, nonatomic) NSString *tutorialName;
+@property (nonatomic, weak) IBOutlet UIView *containerView;
+@property (nonatomic, strong) NSString *tutorialName;
 ```
 
 **Not Preferred:**
 
 ```objc
-@property (nonatomic, weak) IBOutlet UIView *containerView;
+@property (weak, nonatomic) IBOutlet UIView *containerView;
 @property (nonatomic) NSString *tutorialName;
 ```
 
@@ -436,7 +438,7 @@ Constants are preferred over in-line string literals or numbers, as they allow f
 **Preferred:**
 
 ```objc
-static NSString * const RWTAboutViewControllerCompanyName = @"RayWenderlich.com";
+static NSString * const RWTAboutViewControllerCompanyName = @"Breezeworks.com";
 
 static CGFloat const RWTImageThumbnailHeight = 50.0;
 ```
@@ -444,7 +446,7 @@ static CGFloat const RWTImageThumbnailHeight = 50.0;
 **Not Preferred:**
 
 ```objc
-#define CompanyName @"RayWenderlich.com"
+#define CompanyName @"Breezeworks.com"
 
 #define thumbnailHeight 2
 ```
@@ -463,7 +465,7 @@ typedef NS_ENUM(NSInteger, RWTLeftMenuTopItemType) {
 };
 ```
 
-You can also make explicit value assignments (showing older k-style constant definition):
+You can also make explicit value assignments:
 
 ```objc
 typedef NS_ENUM(NSInteger, RWTGlobalConstants) {
@@ -511,7 +513,7 @@ switch (condition) {
 
 ```
 
-There are times when the same code can be used for multiple cases, and a fall-through should be used.  A fall-through is the removal of the 'break' statement for a case thus allowing the flow of execution to pass to the next case value.  A fall-through should be commented for coding clarity.
+There are times when the same code can be used for multiple cases, and a fall-through should be used.  A fall-through is the removal of the 'break' statement for a case thus allowing the flow of execution to pass to the next case value.  Fall-throughs are hard to spot and thus should **always** be commented for coding clarity. An uncommented fall-through should indicate a likely error (in the form of a missing `break`).
 
 ```objc
 switch (condition) {
@@ -600,6 +602,7 @@ Conditional bodies should always use braces even when a conditional body could b
 if (!error) {
   return success;
 }
+if (!error) { return success; }
 ```
 
 **Not Preferred:**
@@ -661,6 +664,10 @@ Where class constructor methods are used, these should always return type of 'in
 ```
 
 More information on instancetype can be found on [NSHipster.com](http://nshipster.com/instancetype/).
+
+## Protected methods
+
+**TK**
 
 ## CGRect Functions
 
@@ -773,22 +780,6 @@ A long line of code like this should be carried on to the second line adhering t
 self.productsRequest = [[SKProductsRequest alloc] 
   initWithProductIdentifiers:productIdentifiers];
 ```
-
-
-## Smiley Face
-
-Smiley faces are a very prominent style feature of the raywenderlich.com site!  It is very important to have the correct smile signifying the immense amount of happiness and excitement for the coding topic.  The end square bracket is used because it represents the largest smile able to be captured using ascii art.  A half-hearted smile is represented if an end parenthesis is used, and thus not preferred.
-
-**Preferred:**
-```objc
-:]
-```
-
-**Not Preferred:**
-```objc
-:)
-```  
-
 
 ## Xcode project
 
